@@ -3,6 +3,9 @@ using System.Net.NetworkInformation;
 
 namespace VNetworks
 {
+	/// <summary>
+	/// Provides a class object that manages networking operations.
+	/// </summary>
 	public class VNetwork
 	{
 		/// <summary>
