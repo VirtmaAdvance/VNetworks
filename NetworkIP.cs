@@ -3,7 +3,7 @@ using System.Net.NetworkInformation;
 
 namespace VNetworks
 {
-	public class NetworkIP : IPAddress
+	public class NetworkIP:IPAddress
 	{
 
 		public IPAddress Value => new(base.GetAddressBytes());

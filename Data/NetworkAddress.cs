@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Net;
 
 namespace VNetworks.Data
 {
-	public readonly struct NetworkAddress : IEquatable<NetworkAddress>, IComparable<NetworkAddress>
+	/// <summary>
+	/// Provides a structred object that stores an IPAddress value.
+	/// </summary>
+	public readonly struct NetworkAddress:IEquatable<NetworkAddress>, IComparable<NetworkAddress>
 	{
 
 		private readonly IPAddress? _ipAddress;
@@ -53,11 +51,11 @@ namespace VNetworks.Data
 			_addressValue=value;
 		}
 		/// <inheritdoc cref="NetworkAddress(NetworkIP, IPAddress, string)"/>
-		public static explicit operator NetworkAddress(string value) => new (value);
+		public static explicit operator NetworkAddress(string value) => new(value);
 		/// <inheritdoc cref="NetworkAddress(NetworkIP, IPAddress, string)"/>
-		public static explicit operator NetworkAddress(IPAddress value) => new (value);
+		public static explicit operator NetworkAddress(IPAddress value) => new(value);
 		/// <inheritdoc cref="NetworkAddress(NetworkIP, IPAddress, string)"/>
-		public static explicit operator NetworkAddress(NetworkIP value) => new (value);
+		public static explicit operator NetworkAddress(NetworkIP value) => new(value);
 		/// <summary>
 		/// Gets the string representation of this object.
 		/// </summary>
@@ -78,39 +76,18 @@ namespace VNetworks.Data
 			return false;
 		}
 
-		public override int GetHashCode()
-		{
-			return _addressValue?.GetHashCode() ?? _ipAddress?.GetHashCode() ?? _networkIP?.GetHashCode() ?? 0;
-		}
+		public override int GetHashCode() => _addressValue?.GetHashCode() ?? _ipAddress?.GetHashCode() ?? _networkIP?.GetHashCode() ?? 0;
 
-		public static bool operator ==(NetworkAddress left, NetworkAddress right)
-		{
-			return left.Equals(right);
-		}
+		public static bool operator ==(NetworkAddress left, NetworkAddress right) => left.Equals(right);
 
-		public static bool operator !=(NetworkAddress left, NetworkAddress right)
-		{
-			return !(left==right);
-		}
+		public static bool operator !=(NetworkAddress left, NetworkAddress right) => !(left==right);
 
-		public static bool operator <(NetworkAddress left, NetworkAddress right)
-		{
-			return left.CompareTo(right)<0;
-		}
+		public static bool operator <(NetworkAddress left, NetworkAddress right) => left.CompareTo(right)<0;
 
-		public static bool operator <=(NetworkAddress left, NetworkAddress right)
-		{
-			return left.CompareTo(right)<=0;
-		}
+		public static bool operator <=(NetworkAddress left, NetworkAddress right) => left.CompareTo(right)<=0;
 
-		public static bool operator >(NetworkAddress left, NetworkAddress right)
-		{
-			return left.CompareTo(right)>0;
-		}
+		public static bool operator >(NetworkAddress left, NetworkAddress right) => left.CompareTo(right)>0;
 
-		public static bool operator >=(NetworkAddress left, NetworkAddress right)
-		{
-			return left.CompareTo(right)>=0;
-		}
+		public static bool operator >=(NetworkAddress left, NetworkAddress right) => left.CompareTo(right)>=0;
 	}
 }

@@ -14,9 +14,6 @@ namespace VNetworks
 		/// </summary>
 		public static IPAddress? CurrentIPv6Address => NetworkInformation.GetActiveIPAddress(NetworkInformation.GetActiveNetworkInterface(), System.Net.Sockets.AddressFamily.InterNetworkV6);
 
-
-
-
 		public static IPAddress? GetPrimaryIPAddress() => NetworkInformation.GetActiveIPAddress(NetworkInformation.GetActiveNetworkInterface());
 		public static NetworkInterface[] GetAllInterfaces() => NetworkInterface.GetAllNetworkInterfaces();
 

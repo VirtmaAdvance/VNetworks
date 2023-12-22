@@ -22,9 +22,9 @@
 		/// </summary>
 		/// <param name="bytes"></param>
 		public AddressBytes(byte[] bytes) => Bytes=bytes;
-		public static explicit operator AddressBytes(byte[] bytes) => new (bytes);
+		public static explicit operator AddressBytes(byte[] bytes) => new(bytes);
 
-		public static explicit operator AddressBytes(System.Net.IPAddress ipAddress) => new (ipAddress.GetAddressBytes());
+		public static explicit operator AddressBytes(System.Net.IPAddress ipAddress) => new(ipAddress.GetAddressBytes());
 
 		public static bool operator ==(AddressBytes a, AddressBytes b) => a.Bytes.Equals(b.Bytes);
 

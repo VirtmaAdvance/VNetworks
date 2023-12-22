@@ -7,6 +7,16 @@
     <Copyright>0BSD</Copyright>
     <PackageLicenseExpression>0BSD</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
+    <GenerateDocumentationFile>True</GenerateDocumentationFile>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Title>VNetworks</Title>
+    <Authors>Daniel K. Valente</Authors>
+    <Company>VirtmaAdvance</Company>
+    <Description>Provides networking solutions and alternatives with inheritable classes.</Description>
+    <PackageTags>network;ip;http;request;header;post;get;database</PackageTags>
+    <PackAsTool>True</PackAsTool>
+    <IncludeSymbols>True</IncludeSymbols>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
   </PropertyGroup>
 
 </Project>

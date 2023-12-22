@@ -8,7 +8,7 @@ namespace VNetworks
 	/// <summary>
 	/// Provides easily accessible network information.
 	/// </summary>
-	public class NetworkInformation : NetworkInterface
+	public class NetworkInformation:NetworkInterface
 	{
 		/// <summary>
 		/// Gets the physical/MAC (Media Access Control) address.
@@ -33,30 +33,30 @@ namespace VNetworks
 		/// <summary>
 		/// Gets the collection of unicast internetwork addresses.
 		/// </summary>
-		public IEnumerable<UnicastIPAddressInformation> InterNetworkUnicastAddresses => UnicastAddresses.Where(q=>q.Address.AddressFamily.HasAny(AddressFamily.InterNetwork, AddressFamily.InterNetworkV6));
+		public IEnumerable<UnicastIPAddressInformation> InterNetworkUnicastAddresses => UnicastAddresses.Where(q => q.Address.AddressFamily.HasAny(AddressFamily.InterNetwork, AddressFamily.InterNetworkV6));
 		/// <summary>
 		/// Gets the collection of IP addresses on the internetwork.
 		/// </summary>
-		public IEnumerable<IPAddress> InterNetworkIPAddresses => InterNetworkUnicastAddresses.Select(q=>q?.Address).Where(q=>q is not null)!;
+		public IEnumerable<IPAddress> InterNetworkIPAddresses => InterNetworkUnicastAddresses.Select(q => q?.Address).Where(q => q is not null)!;
 		/// <summary>
 		/// Gets the <see cref="IPAddress"/> object associated with this object.
 		/// </summary>
-		public IPAddress? IPv4Address => InterNetworkIPAddresses.Where(q=>q.AddressFamily.HasFlag(AddressFamily.InterNetwork)).FirstOrDefault();
+		public IPAddress? IPv4Address => InterNetworkIPAddresses.Where(q => q.AddressFamily.HasFlag(AddressFamily.InterNetwork)).FirstOrDefault();
 		/// <summary>
 		/// Gets the <see cref="IPAddress"/> object associated with this object.
 		/// </summary>
-		public IPAddress? IPv6Address => InterNetworkIPAddresses.Where(q=>q.AddressFamily.HasFlag(AddressFamily.InterNetworkV6)).FirstOrDefault();
+		public IPAddress? IPv6Address => InterNetworkIPAddresses.Where(q => q.AddressFamily.HasFlag(AddressFamily.InterNetworkV6)).FirstOrDefault();
 		/// <summary>
 		/// Gets the primary/active IPAddress.
 		/// </summary>
 		public IPAddress? PrimaryIPAddress
 		{
-			get => UnicastAddresses.Where(q=>(q.Address is not null) && q.Address.AddressFamily.HasAny(AddressFamily.InterNetwork, AddressFamily.InterNetworkV6)).Select(q=>q.Address).FirstOrDefault();
+			get => UnicastAddresses.Where(q => (q.Address is not null) && q.Address.AddressFamily.HasAny(AddressFamily.InterNetwork, AddressFamily.InterNetworkV6)).Select(q => q.Address).FirstOrDefault();
 		}
 		/// <summary>
 		/// Gets the IPv4 subnet mask.
 		/// </summary>
-		public IPAddress? IPv4Mask => InterNetworkUnicastAddresses.FirstOrDefault(q=>q.Address.AddressFamily.HasFlag(AddressFamily.InterNetwork))?.IPv4Mask;
+		public IPAddress? IPv4Mask => InterNetworkUnicastAddresses.FirstOrDefault(q => q.Address.AddressFamily.HasFlag(AddressFamily.InterNetwork))?.IPv4Mask;
 
 		public int PrefixLength => CalculatePrefixLength(IPv4Address, IPv4Mask);
 
@@ -70,7 +70,7 @@ namespace VNetworks
 		public static NetworkInterface? GetNetworkInterfaceFromIPAddress(IPAddress ipAddress)
 		{
 			foreach(var sel in GetAllNetworkInterfaces())
-				if(sel.GetIPProperties().UnicastAddresses.FirstOrDefault(q=>q.Address.Equals(ipAddress)) is not null)
+				if(sel.GetIPProperties().UnicastAddresses.FirstOrDefault(q => q.Address.Equals(ipAddress)) is not null)
 					return sel;
 			return null;
 		}
@@ -92,7 +92,7 @@ namespace VNetworks
 			if(addresses is null)
 				return -1;
 			int prefixLength = 0;
-			for (int i = 0; i < addresses[0].Length; i++)
+			for(int i = 0;i < addresses[0].Length;i++)
 			{
 				var res=Internal_GetPrefixLengthValue(addresses[0][i], addresses[1][i], prefixLength);
 				prefixLength=res.Result;
@@ -102,11 +102,11 @@ namespace VNetworks
 			return prefixLength;
 		}
 
-		private static IntResult Internal_GetPrefixLengthValue(byte ipByte, byte maskByte, int prefixLength=0) => Internal_CompareAddresses(ipByte, maskByte) ? new (prefixLength+8, true) : new (prefixLength+GetBitsToCount(ipByte, maskByte), true);
+		private static IntResult Internal_GetPrefixLengthValue(byte ipByte, byte maskByte, int prefixLength = 0) => Internal_CompareAddresses(ipByte, maskByte) ? new(prefixLength+8, true) : new(prefixLength+GetBitsToCount(ipByte, maskByte), true);
 
 		private static bool Internal_CompareAddresses(byte a, byte b) => a == b;
 
-		private static bool CheckIP(params IPAddress?[] addresses) => addresses.All(q=>q is not null);
+		private static bool CheckIP(params IPAddress?[] addresses) => addresses.All(q => q is not null);
 
 		private static AddressBytesCollection? Internal_GetAddressBytes(IPAddress? address1, IPAddress? address2)
 		{
@@ -134,20 +134,19 @@ namespace VNetworks
 			return bitsToCount;
 		}
 
-
 		/// <summary>
 		/// Gets the currently active network interface.
 		/// </summary>
 		/// <returns></returns>
-		public static NetworkInterface? GetActiveNetworkInterface() => GetAllNetworkInterfaces().FirstOrDefault(q=>q.OperationalStatus.HasFlag(OperationalStatus.Up));
+		public static NetworkInterface? GetActiveNetworkInterface() => GetAllNetworkInterfaces().FirstOrDefault(q => q.OperationalStatus.HasFlag(OperationalStatus.Up));
 
 		public static IPAddress? GetActiveIPAddress(NetworkInterface? networkInterface) => (networkInterface is not null) ? GetAllActiveIPAddresses(networkInterface).FirstOrDefault() : null;
 
-		public static IPAddress? GetActiveIPAddress(NetworkInterface? networkInterface, AddressFamily addressFamily) => (networkInterface is not null) ? GetAllActiveIPAddresses(networkInterface).FirstOrDefault(q=>q.AddressFamily.HasAny(addressFamily.GetInstanceValues())) : null;
+		public static IPAddress? GetActiveIPAddress(NetworkInterface? networkInterface, AddressFamily addressFamily) => (networkInterface is not null) ? GetAllActiveIPAddresses(networkInterface).FirstOrDefault(q => q.AddressFamily.HasAny(addressFamily.GetInstanceValues())) : null;
 
-		public static IEnumerable<IPAddress> GetAllActiveIPAddresses(NetworkInterface sel) => GetAllActiveUnicastAddresses(sel).Select(q=>q.Address);
+		public static IEnumerable<IPAddress> GetAllActiveIPAddresses(NetworkInterface sel) => GetAllActiveUnicastAddresses(sel).Select(q => q.Address);
 
-		public static IEnumerable<UnicastIPAddressInformation> GetAllActiveUnicastAddresses(NetworkInterface sel) => GetAllUnicastAddresses(sel).Where(q=>(q.Address is not null) && q.Address.AddressFamily.HasAny(AddressFamily.InterNetwork, AddressFamily.InterNetworkV6));
+		public static IEnumerable<UnicastIPAddressInformation> GetAllActiveUnicastAddresses(NetworkInterface sel) => GetAllUnicastAddresses(sel).Where(q => (q.Address is not null) && q.Address.AddressFamily.HasAny(AddressFamily.InterNetwork, AddressFamily.InterNetworkV6));
 
 		public static UnicastIPAddressInformationCollection GetAllUnicastAddresses(NetworkInterface sel) => sel.GetIPProperties().UnicastAddresses;
 
