@@ -61,11 +61,11 @@ namespace VNetworks.Data
 		/// </summary>
 		/// <returns></returns>
 		public new string ToString() => _addressValue??"";
-
+		/// <inheritdoc cref="Object.Equals(object?)"/>
 		public bool Equals(NetworkAddress other) => other._ipAddress == _ipAddress || other._addressValue == _addressValue || other._networkIP == _networkIP;
-
+		/// <inheritdoc cref="int.CompareTo(object?)"/>
 		public int CompareTo(NetworkAddress other) => (other._addressValue is not null) ? other._addressValue.CompareTo(_addressValue) : throw new InvalidOperationException("Comparing data with invalid or null values.");
-
+		/// <inheritdoc cref="Object.Equals(object?)"/>
 		public override bool Equals(object? obj)
 		{
 			if(obj is not null)
@@ -75,19 +75,19 @@ namespace VNetworks.Data
 			}
 			return false;
 		}
-
+		/// <inheritdoc cref="Object.GetHashCode()"/>
 		public override int GetHashCode() => _addressValue?.GetHashCode() ?? _ipAddress?.GetHashCode() ?? _networkIP?.GetHashCode() ?? 0;
-
+		/// <inheritdoc cref="Object.Equals(object?, object?)"/>
 		public static bool operator ==(NetworkAddress left, NetworkAddress right) => left.Equals(right);
-
+		/// <inheritdoc cref="Object.Equals(object?, object?)"/>
 		public static bool operator !=(NetworkAddress left, NetworkAddress right) => !(left==right);
-
+		/// <inheritdoc cref="Object.Equals(object?, object?)"/>
 		public static bool operator <(NetworkAddress left, NetworkAddress right) => left.CompareTo(right)<0;
-
+		/// <inheritdoc cref="Object.Equals(object?, object?)"/>
 		public static bool operator <=(NetworkAddress left, NetworkAddress right) => left.CompareTo(right)<=0;
-
+		/// <inheritdoc cref="Object.Equals(object?, object?)"/>
 		public static bool operator >(NetworkAddress left, NetworkAddress right) => left.CompareTo(right)>0;
-
+		/// <inheritdoc cref="Object.Equals(object?, object?)"/>
 		public static bool operator >=(NetworkAddress left, NetworkAddress right) => left.CompareTo(right)>=0;
 	}
 }
