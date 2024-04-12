@@ -27,5 +27,15 @@ namespace VNetworks
 		/// <returns>an array of <see cref="NetworkInterface"/>s available to the current machine.</returns>
 		public static NetworkInterface[] GetAllInterfaces() => NetworkInterface.GetAllNetworkInterfaces();
 
+
+
+		public VNetwork()
+		{
+
+		}
+
+
+
+
 	}
 }

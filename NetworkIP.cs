@@ -58,6 +58,21 @@ namespace VNetworks
 		public NetworkIP(string address) : this(Parse(address))
 		{
 		}
+		/// <inheritdoc cref="PingHost(IPAddress, int)"/>
+		public PingReply PingHost(int timeout = 100) => PingHost(this, timeout);
+		/// <inheritdoc cref="PingHost(IPAddress, int)"/>
+		public async Task<PingReply> PingHostAsync(int timeout=100) => await PingHostAsync(this, timeout);
+
+
+		/// <summary>
+		/// Pings the destination host.
+		/// </summary>
+		/// <param name="address"></param>
+		/// <param name="timeout"></param>
+		/// <returns></returns>
+		public static PingReply PingHost(IPAddress address, int timeout=100) => new Ping().Send(address, timeout);
+		/// <inheritdoc cref="PingHost(IPAddress, int)"/>
+		public static async Task<PingReply> PingHostAsync(IPAddress address, int timeout=100) => await new Ping().SendPingAsync(address, timeout);
 
 	}
 }
